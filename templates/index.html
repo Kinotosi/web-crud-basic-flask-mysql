@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %} List Data {% endblock %}
+
+{% block header %} Table Data {% endblock %}
+
+{% block body %}
+    <a href="{{ url_for('input_data') }}" class="btn btn-primary" style="margin-bottom: 1.3rem;">Input Data</a>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success!</strong> {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endif%}
+    {% endwith %}
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">No</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Telp</th>
+                <th scope="col">Address</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for employe in data %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ employe.name }}</td>
+                    <td>{{ employe.email }}</td>
+                    <td>{{ employe.telp }}</td>
+                    <td>{{ employe.address }}</td>
+                    <td>
+                        <a href="{{ url_for('edit_data', id=employe.id) }}" class="btn btn-warning">Edit</a>
+                        <a href="{{ url_for('delete', id=employe.id) }}" class="btn btn-danger" onclick="return confirm('Are you sure delete this data?')">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
